@@ -1,0 +1,7 @@
+{
+  "extends": ["@sourcegraph/eslint-config"],
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "ignorePatterns": ["src/graphql-schema.ts"]
+}
