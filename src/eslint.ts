@@ -24,7 +24,7 @@ async function getView(step: Duration, repository: { repo: string; path: string 
                         ({ commit }, index) => gql`
                         commit${index}: commit(rev: "${commit}") {
                             tree(path: $path) {
-                                lsif(toolName: "lsif-eslint") {
+                                lsif(toolName: "eslint-formatter-lsif") {
                                     diagnostics {
                                         totalCount
                                     }
