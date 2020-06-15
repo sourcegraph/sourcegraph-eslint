@@ -96,8 +96,12 @@ export function activate(context: sourcegraph.ExtensionContext): void {
         from(sourcegraph.configuration).pipe(
             switchMap(async () => {
                 const settings = sourcegraph.configuration.get().value
+                const repo = settings['eslint.insight.repository']
+                if (!repo) {
+                    throw new Error('`eslint.insight.repository` is not defined')
+                }
                 return getView(settings['eslint.step'] || DEFAULT_STEP, {
-                    repo: settings['eslint.insight.repository'],
+                    repo,
                     path: '',
                 })
             })
