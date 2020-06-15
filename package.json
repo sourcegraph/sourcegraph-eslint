@@ -8,6 +8,10 @@
     "*"
   ],
   "wip": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcegraph/sourcegraph-eslint"
+  },
   "categories": [
     "Code analysis",
     "Reports and stats",
