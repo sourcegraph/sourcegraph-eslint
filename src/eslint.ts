@@ -64,7 +64,7 @@ async function getView(step: Duration, repository: { repo: string; path: string 
                 },
                 series: [
                     {
-                        name: `${repository.repo}/${repository.path}`,
+                        name: `${repository.repo}/${repository.path}`.replace(/\/+$/, ''),
                         dataKey: 'totalCount',
                         stroke: ESLINT_BRAND_COLOR,
                     },
