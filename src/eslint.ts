@@ -4,9 +4,10 @@ import { switchMap } from 'rxjs/operators'
 import { IGitCommit } from './graphql-schema'
 import gql from 'tagged-template-noop'
 import { resolveDocumentURI } from './uri'
-import { startOfDay, sub } from 'date-fns'
+import { startOfDay, sub, formatISO } from 'date-fns'
 import { queryGraphQL } from './api'
 import { determineCommitsToQuery } from './search'
+import { escapeRegExp } from 'lodash'
 
 const ESLINT_BRAND_COLOR = 'rgb(75, 50, 195)'
 const DEFAULT_STEP = {
@@ -67,6 +68,20 @@ async function getView(step: Duration, repository: { repo: string; path: string 
                         name: `${repository.repo}/${repository.path}`.replace(/\/+$/, ''),
                         dataKey: 'totalCount',
                         stroke: ESLINT_BRAND_COLOR,
+                        linkURLs: dates.map(date => {
+                            // Link to diff search that explains what new cases were added between two data points
+                            const url = new URL('/search', sourcegraph.internal.sourcegraphURL)
+                            // Use formatISO instead of toISOString(), because toISOString() always outputs UTC.
+                            // They mark the same point in time, but using the user's timezone makes the date string
+                            // easier to read (else the date component may be off by one day)
+                            const after = formatISO(sub(date, step))
+                            const before = formatISO(date)
+                            const repoFilter = `repo:^${escapeRegExp(repository.repo)}$`
+                            const pathRegexp = escapeRegExp(repository.path)
+                            const diffQuery = `${repoFilter} type:commit after:${after} before:${before} file:^${pathRegexp}.*\\.m?[jt]sx?$`
+                            url.searchParams.set('q', diffQuery)
+                            return url.href
+                        }),
                     },
                 ],
                 data,
