@@ -19,7 +19,7 @@ async function getView(step: Duration, repository: { repo: string; path: string 
     const commits = await determineCommitsToQuery(dates, repository.repo)
     const diagnosticsResult = await queryGraphQL(
         gql`
-            query Diagnostics($repo: String!, $path: String!) {
+            query ESLintDiagnostics($repo: String!, $path: String!) {
                 repository(name: $repo) {
                     ${commits.map(
                         ({ commit }, index) => gql`

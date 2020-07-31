@@ -12,7 +12,9 @@ export async function determineCommitsToQuery(dates: Date[], repo: string): Prom
     console.log('searching commits', commitQueries)
     const commitResults = await queryGraphQL<Record<string, ISearch>>(
         gql`
-            query BulkSearchCommits(${commitQueries.map((query, index) => `$query${index}: String!`).join(', ')}) {
+            query ESLintBulkSearchCommits(${commitQueries
+                .map((query, index) => `$query${index}: String!`)
+                .join(', ')}) {
                 ${commitQueries
                     .map(
                         (query, index) => gql`
