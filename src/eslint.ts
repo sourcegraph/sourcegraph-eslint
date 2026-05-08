@@ -1,6 +1,5 @@
 import * as sourcegraph from 'sourcegraph'
-import { from, Observable } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
+import { from, Observable, switchMap } from 'rxjs'
 import { IGitCommit } from './graphql-schema'
 import gql from 'tagged-template-noop'
 import { resolveDocumentURI } from './uri'

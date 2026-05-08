@@ -95,7 +95,7 @@
   "dependencies": {
     "date-fns": "^2.14.0",
     "lodash": "^4.17.15",
-    "rxjs": "^6.5.5",
+    "rxjs": "7.8.0",
     "tagged-template-noop": "^2.1.1"
   }
 }
